@@ -190,7 +190,7 @@ app.post('/ai/chat', async (req, res) => {
       return res.status(404).json({ status: 'fail', message: 'User not found' });
     }
 
-    const aiResponse = await generateAiResponse(payload.message);
+    const aiResponse = await generateAiResponse(payload.message, prisma);
     const chat = await prisma.chatHistory.create({
       data: {
         userId: payload.userId,

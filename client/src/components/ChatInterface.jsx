@@ -80,7 +80,13 @@ export function ChatInterface() {
 
     try {
       const result = await chatService.sendMessage(userId, userMessage);
-      setMessages((prev) => [...prev, result.data.chat]);
+      const chat = result?.chat || {
+        id: `${Date.now()}`,
+        message: userMessage,
+        response: result?.aiResponse || 'Respons AI tidak valid. Silakan coba lagi.',
+        createdAt: new Date().toISOString(),
+      };
+      setMessages((prev) => [...prev, chat]);
     } catch (err) {
       setError(err.message || 'Gagal mengirim pesan');
     } finally {
